@@ -37,7 +37,7 @@ abstractedAccountTwoAddress: W8FaExHSfPtfDND2hSA1zxwFkdTH8xpevv66Mz3h8hu2ret
  newPostRecoveryPassword of abstractedAccountTwo
   string: four
   onChainPasswordHash: 0xf98b9e2b2df297b58c7866629398b25b09158b4155e96ca487e81ba8dd6419a7
---------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
 Assets shibuyaOnchainInfo: 
  simpleNftAddress: Y1fAvzAhP2cfnNkKJ5dWRcZDAgNHkPyz8wSFnfWEZ3P7uvy
  simpleTokenAddress:YnvQR3jsYhi2npr8n1b4pSMWRxmaBCz6tJMLQoz72FBxCg5
