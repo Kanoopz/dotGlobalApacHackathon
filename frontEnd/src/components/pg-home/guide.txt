@@ -1,0 +1,551 @@
+/* eslint-disable @next/next/no-img-element */
+import {useBalance, useBlockHeader, useBlockHeaders, useCall, useCallSubscription, useChainRpc, useChainRpcList, useContract, useDryRun, useEventSubscription, useEvents, useInstalledWallets, useTx, useTxPaymentInfo, useUninstalledWallets, useWallet,} from 'useink';
+import { RustResult, formatBalance, isBroadcast, isFinalized, isInBlock, isPendingSignature, pickDecoded, pickDecodedError, pickResultErr, pickResultOk, pickTxInfo, shouldDisable,} from 'useink/utils';
+import { ChainId } from 'useink/chains';
+import { useEffect, useMemo, useState } from 'react';
+import { useNotifications, useTxNotifications } from 'useink/notifications';
+import { Notifications } from '../Notifications';
+
+import metadata from '../../metadata/playground.json';
+
+
+
+
+
+
+
+const SHIBUYA_CONTRACT_ADDRESS = 'ZZ5WSTzR9KkPKWCcrdvEignieKWPBmxme6TGUMuPqtp8QT2';
+
+
+
+
+
+
+
+/*
+interface Happy 
+{
+  mood: string;
+}
+
+interface BadMood 
+{
+  BadMood: { mood: string };
+}
+*/
+
+
+
+
+
+
+
+/*
+type MoodResult = RustResult<Happy, BadMood>;
+*/
+
+
+
+
+
+
+
+export const HomePage: React.FC = () => 
+{
+  const { account, accounts, setAccount, connect, disconnect } = useWallet();
+  const block = useBlockHeader(); // with no arguments it defaults to the first item in the chains config
+  const astarBlockNumber = useBlockHeader('astar');
+  const allChainBlockHeaders = useBlockHeaders();
+  const balance = useBalance(account);
+
+
+
+  const { rpcs, setChainRpc } = useChainRpcList('astar');
+  const astarRpc = useChainRpc('astar');
+
+
+  //CONTRACT INSTANCE/////
+  const shibuyaContract = useContract(SHIBUYA_CONTRACT_ADDRESS, metadata, 'shibuya-testnet');
+  //CONTRACT INSTANCE FLIP FUNCRTION CALL/////
+  const shibuyaFlipTx = useTx(shibuyaContract, 'incrementCounter');
+  //FLIP FUNCTION CALL TX NOTIFICATION/////
+  useTxNotifications(shibuyaFlipTx);
+  //GET FUNCTION CALL SUBSCRIPTION TO GET VALUE/////
+  const shibuyaGetSubcription = useCallSubscription<boolean>(shibuyaContract, 'fetCounter');
+  const { addNotification } = useNotifications();
+
+
+
+  //////////////////////////////////////////////
+  const [stateBoolTxargs, setStateBoolTxArgs] = useState([false]);
+  const [boolArgChangingValue, setBoolArgChangingValue] = useState('');
+  const [boolArgActualValue, setBoolArgActualValue] = useState('');
+  const shibuyaSetBoolTx = useTx(shibuyaContract, 'setBoolValue');
+  useTxNotifications(shibuyaSetBoolTx);
+  const shibuyaGetBoolSubcription = useCallSubscription<boolean>(shibuyaContract, 'getBoolValue');
+
+  function setCustomBoolTxArgValue()
+  {
+    console.log("actualValue:");
+    console.log(stateBoolTxargs);
+
+    let arrayValue = stateBoolTxargs;
+    let value = stateBoolTxargs[0];
+    let newValue = !value;
+
+    setStateBoolTxArgs([newValue]);
+
+    console.log("newValue:");
+    console.log([newValue]);
+
+    console.log("newState:");
+    console.log(stateBoolTxargs);
+    console.log("///////////////");
+  }
+
+
+  const [stateStringTxargs, setStateStringTxArgs] = useState(['stateString']);
+  const [stringArgChangingValue, setStringArgChangingValue] = useState('');
+  const [stringArgActualValue, setStringArgActualValue] = useState('');
+  const shibuyaStringTx = useTx(shibuyaContract, 'setStringValue');
+  useTxNotifications(shibuyaStringTx);
+  const shibuyaGetStringSubcription = useCallSubscription<boolean>(shibuyaContract, 'getStringValue');
+
+  const handleStringArgChange = event => 
+  {
+    setStringArgChangingValue(event.target.value);
+  };
+
+  function setCustomStringTxArgValue()
+  {
+    console.log("Actual stringValue:");
+    
+    setStringArgActualValue(stringArgChangingValue);
+
+    let newStringTxArgs = [stringArgChangingValue];
+
+    setStateStringTxArgs(newStringTxArgs);
+
+    console.log(newStringTxArgs);
+  }
+
+
+  const [stateHashTxargs, setStateHashTxArgs] = useState(['0x0000000000000000000000000000000000000000000000000000000000000000']);
+  const [hashArgChangingValue, setHashArgChangingValue] = useState('');
+  const [hashArgActualValue, setHashArgActualValue] = useState('');
+  const shibuyaHashTx = useTx(shibuyaContract, 'setHashValue');
+  //let hashTxArgs = ['0x84000a0000e00000c000004d040000000009000000000000000000000000000b'];
+  useTxNotifications(shibuyaHashTx);
+  const shibuyaGetHashSubcription = useCallSubscription<boolean>(shibuyaContract, 'getHashValue');
+
+  const handleHashArgChange = event => 
+  {
+    setHashArgChangingValue(event.target.value);
+  };
+
+  function setCustomHashTxArgValue()
+  {
+    console.log("Actual hashValue:");
+    
+    setHashArgActualValue(hashArgChangingValue);
+
+    let newHashTxArgs = [hashArgChangingValue];
+
+    setStateHashTxArgs(newHashTxArgs);
+
+    console.log(newHashTxArgs);
+  }
+
+
+  const [stateAccountIdTxargs, setStateAccountIdTxArgs] = useState(['ZZ5WSTzR9KkPKWCcrdvEignieKWPBmxme6TGUMuPqtp8QT2']);
+  const [accountIdArgChangingValue, setAccountIdArgChangingValue] = useState('');
+  const [accountIdArgActualValue, setAccountIdArgActualValue] = useState('');
+  const shibuyaAccountIdTx = useTx(shibuyaContract, 'setAccountIdValue');
+  //let accountIdTxArgs = ['XyqomcU9DJ1AuDrkQtUQz1AzPre87KwKCRV2xhLa7ujKKn7'];
+  //let accountIdTxArgs = ['ZZ5WSTzR9KkPKWCcrdvEignieKWPBmxme6TGUMuPqtp8QT2'];
+  useTxNotifications(shibuyaAccountIdTx);
+  const shibuyaGetAccountIdSubcription = useCallSubscription<boolean>(shibuyaContract, 'getAccountIdValue');
+
+  const handleAccountIdArgChange = event => 
+  {
+    setAccountIdArgChangingValue(event.target.value);
+  };
+
+  function setCustomAccountIdTxArgValue()
+  {
+    console.log("Actual accountIdValue:");
+    console.log(stateAccountIdTxargs);
+
+    setAccountIdArgActualValue(accountIdArgChangingValue);
+
+    let newAccountIdTxArgs = [accountIdArgChangingValue];
+    console.log("New accountId value:");
+    console.log(newAccountIdTxArgs);
+
+    setStateAccountIdTxArgs(newAccountIdTxArgs);
+    console.log("State values:");
+    console.log(stateAccountIdTxargs);
+  }
+
+
+
+
+
+
+
+  useEffect(() => 
+  {
+    account &&
+      addNotification
+      ({
+        type: 'WalletConnected',
+        message: `Connected to ${account.name || account.address}`,
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account]);
+
+
+
+
+
+
+
+  const installedWallets = useInstalledWallets();
+  const uninstalledWallets = useUninstalledWallets();
+
+
+
+
+
+  return (
+    <section className="w-full mx-auto">
+      <Notifications />
+
+
+      <div className="max-w-3xl w-full mx-auto py-16 px-4">
+        <h1 className="text-5xl font-bold text-blue-500">useink Kitchen Sink</h1>
+
+
+        <h2 className="text-2xl text-blue-500 mb-16">
+          See the contract definitions{' '}
+
+
+          <a
+            className="underline hover:opacity-80 transition duration-75"
+            href="https://github.com/paritytech/useink-kitchen-sink/blob/master/lib.rs"
+            target="_blank"
+            rel="noreferrer"
+          >
+            here
+          </a>
+          .
+        </h2>
+
+
+        <div className="mt-8">
+          {
+            !account && 
+            (
+              <ul className="flex flex-col gap-4">
+                {
+                  installedWallets.length > 0 ? 
+                      (
+                          <>
+                            <h2 className="text-xl font-bold">Connect a Wallet</h2>
+                            <h3 className="text-md">Installed Wallets</h3>
+
+
+                            {
+                              installedWallets.map
+                              (
+                                (w) => 
+                                (
+                                  <li key={w.title}>
+                                    <button
+                                      onClick={() => connect(w.extensionName)}
+                                      className="flex items-center w-full rounded-2xl text-white px-6 py-4 bg-blue-500 hover:bg-blue-600 transition duration-75"
+                                    >
+                                      <img className="w-12 mr-2" src={w.logo.src} alt={w.logo.alt} />
+                                      
+                                      
+                                      Connect to {w.title}
+                                    </button>
+                                  </li>
+                                )
+                              )
+                            }
+                          </>
+                      ) 
+                  : 
+                      (
+                          <h2 className="text-xl font-bold">You don&apos;t have any wallets installed...</h2>
+                      )
+                }
+
+
+                {
+                  uninstalledWallets.length > 0 && 
+                  (
+                    <>
+                      <h3 className="text-md">Uninstalled Wallets</h3>
+
+                      {
+                        uninstalledWallets.map
+                        (
+                          (w) => 
+                          (
+                            <li key={w.title}>
+                              <a
+                                href={w.installUrl}
+                                target="_blank"
+                                className="flex items-center w-full rounded-2xl text-white px-6 py-4 bg-blue-500 hover:bg-blue-600 transition duration-75"
+                              >
+                                  <img className="w-12 mr-2" src={w.logo.src} alt={w.logo.alt} />
+                                  Install {w.title}
+                              </a>
+                            </li>
+                          )
+                        )
+                      }
+                    </>
+                  )
+                }
+              </ul>
+            )
+          }
+
+
+          <ul className="list-none flex flex-col gap-12 mt-8">
+          {
+            account && 
+            (
+              <>
+                <li>
+                  <button
+                    onClick={disconnect}
+                    className="rounded-2xl text-white px-6 py-4 bg-blue-500 hover:bg-blue-600 transition duration-75"
+                  >
+                    Disconnect
+                  </button>
+                </li>
+
+                <li>
+                  <b>You are connected as:</b>
+
+
+                  <span className="ml-4 dark:bg-slate-600 bg-slate-200 rounded-lg py-2 px-2">
+                    {account?.name || account?.address}
+                  </span>
+                </li>
+
+                {
+                  accounts?.map
+                  (
+                    (acc) => account !== acc && 
+                    (
+                        <li key={acc.address} className="flex flex-col">
+
+                          <b>Connect to {acc.name ? acc.name : 'wallet'}</b>
+
+
+                          <button
+                            onClick={() => setAccount(acc)}
+                            className="rounded-2xl text-white px-4 py-2 mt-2 bg-blue-500 hover:bg-blue-600 transition duration-75"
+                          >
+                            {acc.address}
+                          </button>
+
+                        </li>
+                      ),
+                  )
+                }
+
+                <li>
+                  <b>Your Free Balance:</b>
+
+                  <span className="ml-4 dark:bg-slate-600 bg-slate-200 rounded-lg py-2 px-2">
+                    {formatBalance(balance?.freeBalance, { decimals: 12, withSi: true })}
+                  </span>
+                </li>
+              </>
+            )
+          }
+
+            <li>
+              <b>Astar Current Block:</b>
+
+              <span className="ml-4 dark:bg-slate-600 bg-slate-200 rounded-lg py-2 px-2">
+                {astarBlockNumber?.blockNumber === undefined ? '--' : astarBlockNumber.blockNumber.toLocaleString()}
+              </span>
+            </li>
+
+            <li>
+              <b>Change a chain&apos;s active RPC url: (e.g. Astar)</b>
+
+              <ul className="px-0 m-0 mt-6 gap-4 grid grid-cols-2 items-center">
+              {
+                rpcs.map
+                (
+                  (rpc) => 
+                  (
+                    <li key={rpc} className="p-0">
+                      <button
+                        className="rounded-2xl w-full text-white px-6 py-4 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 hover:disabled:bg-blue-300 transition duration-75"
+                        disabled={rpc === astarRpc}
+                        onClick={() => setChainRpc(rpc, 'astar')}
+                      >
+
+                        {rpc}
+                      </button>
+
+                    </li>
+                  )
+                )
+              }
+              </ul>
+            </li>
+
+            <li>
+              <b>
+                Get all blocks from configured chains using:{' '}
+                <code className="p-2 rounded-md bg-slate-500">useBlockHeaders()</code>
+              </b>
+
+
+              <ul className="px-0 m-0 mt-6 gap-4 flex items-center flex-col md:flex-row">
+              {
+                (Object.keys(allChainBlockHeaders) as ChainId[]).map
+                (
+                  (chainId) => 
+                  (
+                    <li key={chainId} className="p-0">
+                      <span>
+                        <b>{chainId}:</b> {allChainBlockHeaders[chainId]?.blockNumber?.toLocaleString() || '--'}{' '}
+                      </span>
+                    </li>
+                  )
+                )
+              }
+              </ul>
+            </li>
+
+            {/* //SHIBUYA////////////////////////////////////////////////////////////////////////////////////// */}
+
+            <li className="flex flex-col gap-4">
+              <h3 className="text-xl">Call a contract on another chain. e.g. &quot;Shibuya&quot;</h3>
+
+
+              <h3 className="text-xl">
+                Shibuya Counter: {pickDecoded(shibuyaGetSubcription.result)?.toString() || '--'}
+              </h3>
+
+
+              <button
+                onClick={() => shibuyaFlipTx.signAndSend()}
+                disabled={shouldDisable(shibuyaFlipTx) || !account}
+                className="rounded-2xl text-white px-6 py-4 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 hover:disabled:bg-blue-300 transition duration-75"
+              >
+                {shouldDisable(shibuyaFlipTx) ? 'Increment Counter Shibuya Contract' : 'Increment Counter Shibuya Contract!'}
+              </button>
+
+
+              <h3 className="text-xl">
+                <b>Status:</b> {shibuyaFlipTx.status}
+              </h3>
+
+
+              <button
+                onClick={() => shibuyaFlipTx.resetState()}
+                disabled={shouldDisable(shibuyaFlipTx) || ['InBlock', 'None'].includes(shibuyaFlipTx.status)}
+                className="rounded-2xl text-white px-6 py-4 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 hover:disabled:bg-blue-300 transition duration-75"
+              >
+                Reset state
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
+      <div style={{paddingLeft: '23rem'}}>
+        <h1>/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</h1>
+        
+        {
+          pickDecoded(shibuyaGetBoolSubcription.result) ?
+                <h4>Its true.</h4>
+          :
+                <h4>Its false.</h4>
+        }
+        
+        <h1 style={{paddingTop: '1rem'}}>CUSTOM FUNCTIONS:</h1>
+
+
+        <div style={{paddingTop: '4rem'}}>
+          <div>
+            <div>
+              <h2>setBoolTx: {pickDecoded(shibuyaGetBoolSubcription.result)?.toString() || '--'}</h2>
+              <button onClick={() => shibuyaSetBoolTx.signAndSend(stateBoolTxargs)}>
+                {shouldDisable(shibuyaSetBoolTx) ? 'SETTING' : 'setBoolValue'}
+              </button>
+            </div>
+
+
+            <div style={{paddingTop: '1rem'}}>
+              <h2>boolCustomValue:</h2>
+              <button onClick={setCustomBoolTxArgValue}>setBoolOppositeValue</button>
+            </div>
+          </div>
+
+
+          <div style={{paddingTop: '5rem'}}>
+            <div>
+              <h2>setStringTx: {pickDecoded(shibuyaGetStringSubcription.result)?.toString() || '--'}</h2>
+              <button onClick={() => shibuyaStringTx.signAndSend(stateStringTxargs)}>
+                {shouldDisable(shibuyaStringTx) ? 'SETTING' : 'setStringValue'}
+              </button>
+            </div>
+            
+
+            <div style={{paddingTop: '1rem'}}>
+              <h2>stringCustomValue:</h2>
+              <input type="text" placeholder="newStringToSet" style={{background: 'rgb(105, 103, 116)'}} onChange={handleStringArgChange} value={stringArgChangingValue}></input>
+              <button onClick={setCustomStringTxArgValue} style={{paddingLeft: '1rem'}}>setStringValue</button>
+            </div>
+          </div>
+
+
+          <div style={{paddingTop: '5rem'}}>
+            <div>
+              <h2>setHashTx: {pickDecoded(shibuyaGetHashSubcription.result)?.toString() || '--'}</h2>
+              <button onClick={() => shibuyaHashTx.signAndSend(stateHashTxargs)}>
+                {shouldDisable(shibuyaHashTx) ? 'SETTING' : 'setHashValue'}
+              </button>
+            </div>
+
+
+            <div style={{paddingTop: '1rem'}}>
+              <h2>hashCustomValue:</h2>
+              <input type="text" placeholder="newHashToSet" style={{background: 'rgb(105, 103, 116)'}} onChange={handleHashArgChange} value={hashArgChangingValue}></input>
+              <button onClick={setCustomHashTxArgValue} style={{paddingLeft: '1rem'}}>setHashValue</button>
+            </div>
+          </div>
+
+
+          <div style={{paddingTop: '5rem'}}>
+            <h2>setAccountIdTx: {pickDecoded(shibuyaGetAccountIdSubcription.result)?.toString() || '--'}</h2>
+            <button onClick={() => shibuyaAccountIdTx.signAndSend(stateAccountIdTxargs)}>
+              {shouldDisable(shibuyaAccountIdTx) ? 'SETTING' : 'setHashValue'}
+            </button>
+
+
+            <div style={{paddingTop: '1rem'}}>
+              <h2>accountIdCustomValue:</h2>
+              <input type="text" placeholder="newAccountIdToSet" style={{background: 'rgb(105, 103, 116)'}} onChange={handleAccountIdArgChange} value={accountIdArgChangingValue}></input>
+              <button onClick={setCustomAccountIdTxArgValue} style={{paddingLeft: '1rem'}}>setAccoutIdValue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
