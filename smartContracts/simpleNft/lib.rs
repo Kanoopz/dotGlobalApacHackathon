@@ -23,6 +23,7 @@ mod simpleNft
     ////////////////////////////////////////////////////////////////////////////    
     impl SimpleNft 
     {
+        //Simple constructor to initialize the contractInstance.///
         #[ink(constructor)]
         pub fn new() -> Self 
         {
@@ -36,6 +37,7 @@ mod simpleNft
 
         
 
+        //Message function to mint a nonFungibleToken with the nextId available to the paramNftMinter address.///
         #[ink(message)]
         pub fn mintNft(&mut self, paramNftMinter: AccountId)
         {            
@@ -48,6 +50,7 @@ mod simpleNft
             self.balances.insert(&paramNftMinter, &actualCallerBalance);
         }
 
+        //Message function to transfer a specific nonFungibleToken with the paramIdToTransfer ID from the paraNftTransferer address to the paramAddressTo address.///
         #[ink(message)]
         pub fn transfer(&mut self, paraNftTransferer: AccountId, paramIdToTransfer: u8, paramAddressTo: AccountId)
         {
@@ -71,6 +74,7 @@ mod simpleNft
             self.balances.insert(&paramAddressTo, &actualAddressToBalance);
         }
 
+        //Message function to get the owner of the nonFungibleToken with the paramIdToCheck ID.///
         #[ink(message)]
         pub fn ownerOf(&self, paramIdToCheck: u8) -> AccountId
         {
@@ -79,6 +83,7 @@ mod simpleNft
             self.owners.get(paramIdToCheck).unwrap_or(addressDefault)
         }
 
+        //Message function to get the balance of nonFungibleTokens that owns the paramAddressToCheck address.///
         #[ink(message)]
         pub fn balanceOf(&self, paramAddressToCheck: AccountId) -> u8
         {

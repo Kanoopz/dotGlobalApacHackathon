@@ -1,0 +1,1 @@
+/Users/kanoopz/Desktop/blockchain/POLKADOT/hackathonGitClone/dotGlobalApacHackathon/smartContracts/simpleToken/target/ink/wasm32-unknown-unknown/release/simpleToken.wasm: /Users/kanoopz/Desktop/blockchain/POLKADOT/hackathonGitClone/dotGlobalApacHackathon/smartContracts/simpleToken/lib.rs

@@ -35,6 +35,8 @@ mod accountManagerFactory
     ////////////////////////////////////////////////////////////////////////////
     impl AccountManagerFactory 
     {
+        //Customized constructor to initialize the contractInstance with the paramHashCode hashCode of the abstractedAccount///
+        //smartContract thats going to be instantiated for users.///
         #[ink(constructor)]
         pub fn new(paramHashCode: Hash) -> Self //, paramAddress: AccountId) -> Self 
         {    
@@ -58,6 +60,7 @@ mod accountManagerFactory
             }
         }
         
+        //Message function to create an abstractedAccount instance with the paramAccountPassword password with the caller as the owner.///
         #[ink(message)]
         pub fn createAccount(&mut self, paramAccountPassword: [u8; 32]) -> AccountId
         {
@@ -104,6 +107,8 @@ mod accountManagerFactory
             instanceAddress
         }
 
+        //Message function to do a crossContractCall to the absatractedAccount instance of the paramAccountAddress address///
+        //with the paramPassword current password and a the new paramNewPasswordHash password to set.///
         #[ink(message)]
         pub fn recoverAccountOnInstance(&mut self, paramAccountAddress: AccountId, paramPassword: String, paramNewPasswordHash: [u8; 32])
         {
@@ -163,6 +168,7 @@ mod accountManagerFactory
             self.userAccountsBoundedQuantity.insert(&caller, &newOwnerNumberAccounts);
         }
 
+        //Message function to notify of a recovery that has been made directly in the abstractedAccount with the paramAccountRecovered address.///
         #[ink(message)]
         pub fn notifyRecovery(&mut self, paramAccountRecovered: AccountId)
         {
@@ -223,6 +229,7 @@ mod accountManagerFactory
             self.userAccountsBoundedQuantity.insert(&caller, &newOwnerNumberAccounts);
         }
 
+        //Message function to get the owner address of the abstractedAccount instance with the paramAccountAddress address.///
         #[ink(message)]
         pub fn checkOwnerOfAccount(&self, paramAccountAddress: AccountId) -> AccountId
         {
@@ -231,6 +238,7 @@ mod accountManagerFactory
             accountOwner
         }
 
+        //Message function to get the number of abstractedAccounts created by the EOA paramAccountAddress address.///
         #[ink(message)]
         pub fn getEoaAccountsQuantity(&self, paramAccountAddress: AccountId) -> u8
         {
@@ -239,6 +247,7 @@ mod accountManagerFactory
             ownerAccountsQuantity
         }
 
+        //Message function to calculate the number of abstractedAccounts created by the EOA paramAccountAddress address from the vector list.///
         #[ink(message)]
         pub fn getEoaAccountsQuantityFromVec(&self, paramAddress: AccountId) -> u8
         {
@@ -248,6 +257,7 @@ mod accountManagerFactory
             length
         }
 
+        //Message function to get a specific abstractedAccount created by the paramAddress address at the index position of his list (vector).///
         #[ink(message)]
         pub fn getAccountAddressFromVec(&self, paramAddress: AccountId, index: u8) -> AccountId
         {
@@ -259,6 +269,7 @@ mod accountManagerFactory
             accountAddress
         }
 
+        //Message function to get all the abstractedAccounts created by the paramAddress address.///
         #[ink(message)]
         pub fn getAccountAaVec(&self, paramAddress: AccountId) -> Vec<AccountId>
         {
@@ -267,6 +278,7 @@ mod accountManagerFactory
             ownerAccounts
         }
 
+        //Message function to get the last abstractedAccount instance address created by the caller.///
         #[ink(message)]
         pub fn getLastAddressCreated(&self) -> AccountId
         {

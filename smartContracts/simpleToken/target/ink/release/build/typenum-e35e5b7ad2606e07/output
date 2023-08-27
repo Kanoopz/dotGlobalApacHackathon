@@ -1,0 +1,3 @@
+cargo:rerun-if-changed=build/main.rs
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/Users/kanoopz/Desktop/blockchain/POLKADOT/hackathonGitClone/dotGlobalApacHackathon/smartContracts/simpleToken/target/ink/release/build/typenum-e35e5b7ad2606e07/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/Users/kanoopz/Desktop/blockchain/POLKADOT/hackathonGitClone/dotGlobalApacHackathon/smartContracts/simpleToken/target/ink/release/build/typenum-e35e5b7ad2606e07/out/op.rs

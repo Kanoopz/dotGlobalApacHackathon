@@ -1,0 +1,10 @@
+/Users/kanoopz/Desktop/blockchain/POLKADOT/hackathonGitClone/dotGlobalApacHackathon/smartContracts/simpleToken/target/ink/release/deps/thiserror-f9cc12a803eef0ea.rmeta: /Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/lib.rs /Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/aserror.rs /Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/display.rs /Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/provide.rs
+
+/Users/kanoopz/Desktop/blockchain/POLKADOT/hackathonGitClone/dotGlobalApacHackathon/smartContracts/simpleToken/target/ink/release/deps/libthiserror-f9cc12a803eef0ea.rlib: /Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/lib.rs /Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/aserror.rs /Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/display.rs /Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/provide.rs
+
+/Users/kanoopz/Desktop/blockchain/POLKADOT/hackathonGitClone/dotGlobalApacHackathon/smartContracts/simpleToken/target/ink/release/deps/thiserror-f9cc12a803eef0ea.d: /Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/lib.rs /Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/aserror.rs /Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/display.rs /Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/provide.rs
+
+/Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/lib.rs:
+/Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/aserror.rs:
+/Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/display.rs:
+/Users/kanoopz/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-1.0.43/src/provide.rs:

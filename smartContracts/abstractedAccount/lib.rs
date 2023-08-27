@@ -36,6 +36,9 @@ mod abstractedAccount
     ////////////////////////////////////////////////////////////////////////////  
     impl AbstractedAccount 
     {
+        //Customized constructor to initialize the contractInstance with the paramOwner address that owns this///
+        //abstractedAccount instance, the paramFactoryAddress smartContract address that instantiated this///
+        //abstractedAccount smartContract and the paramPassword passwors to recover this abstractedAccount.///
         #[ink(constructor)]
         pub fn new(paramOwner: AccountId, paramFactoryAddress: AccountId, paramPassword: [u8; 32]) -> Self 
         {
@@ -49,6 +52,9 @@ mod abstractedAccount
         /////"accountAbstractionRelatedFunctions"///////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////
         
+        //Message function to recover this abstractedAccount (directly in this contractInstance) in case that the EOA///
+        //owner seedPhrase gets compromised somehow by providing paramPassword that is the original string that was///
+        //derived into the actual hashPasword and paramNewPasswordHash to set a the new password./// 
         #[ink(message)]
         pub fn recover(&mut self, paramPassword: String, paramNewPasswordHash: [u8; 32])
         {
@@ -69,6 +75,10 @@ mod abstractedAccount
             self.owner = caller;
         }
 
+        //Message function to recover this abstractedAccount (by calling this function through a crossContractCall///
+        //from the accountManagerFactory smartContract) in case that the EOA owner seedPhrase gets compromised somehow///
+        //by providing paramPassword that is the original string that was derived into the actual hashPasword and///
+        //paramNewPasswordHash to set a the new password./// 
         #[ink(message)]
         pub fn recoverFromFactoryContract(&mut self, paramPassword: String, paramNewPasswordHash: [u8; 32], paramNewOwner: AccountId)
         {
@@ -85,6 +95,7 @@ mod abstractedAccount
             self.owner = paramNewOwner;
         }
 
+        //Message function to calculate the merklePassword in a single function call.///
         #[ink(message)]
         pub fn calculatePasswordHash(&self, paramPassword: String) -> [u8; 32]
         {
@@ -94,6 +105,7 @@ mod abstractedAccount
             hashTwo
         }
 
+        //Message function to process the original paramPassword string and derive it into a hash.///
         #[ink(message)]
         pub fn hashProcessOne(&self, paramPassword: String) -> [u8; 32]
         {
@@ -103,6 +115,7 @@ mod abstractedAccount
             output
         }
 
+        //Message function to process the second step to derive the merklePassword.///
         #[ink(message)]
         pub fn hashProcessTwo(&self, paramHashOne: [u8; 32]) -> [u8; 32]
         {
@@ -113,12 +126,14 @@ mod abstractedAccount
             outputTwo
         }
 
+        //Message function to get the address of this abstractedAccount smartContract instance.///
         #[ink(message)]
         pub fn getAccountAddress(&self) -> AccountId
         {
             self.env().account_id()
         }
 
+        //Message functio to get the address of the owner of this abstractedAccount smartContract instance.///
         #[ink(message)]
         pub fn getAccountOwner(&self) -> AccountId
         {
@@ -129,6 +144,7 @@ mod abstractedAccount
         /////"nftRelatedFunctions"//////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////
     
+        //Message function to add a NFT address to the list of assets that this abstractedAccount owns (even if its zero).///
         #[ink(message)]
         pub fn setNft(&mut self, paramNftAddress: AccountId)
         {
@@ -140,12 +156,15 @@ mod abstractedAccount
             self.vecNftAddresses.push(paramNftAddress);
         }
 
+        //Message function to calculate the number of NFT assets that this abstractedAccount owns.///
         #[ink(message)]
         pub fn getVecNftLength(&mut self) -> u8 
         {
             self.vecNftAddresses.len().try_into().unwrap()
         }
 
+        //Message function to get a specific NFT address from the list (vector) in the paramIndex position that///
+        //this abstractedAccount owns (even if its zero).///
         #[ink(message)]
         pub fn getVecNftIndexValue(&mut self, paramIndex: u64) -> AccountId
         {
@@ -154,6 +173,8 @@ mod abstractedAccount
             self.vecNftAddresses[index]
         }
 
+        //Message function to get the list (vector) of NFT assets addresses that this bstractedAccount owns (even///
+        //if theyre zero).///
         #[ink(message)]
         pub fn getAaNftVec(&self) -> Vec<AccountId>
         {
@@ -164,6 +185,8 @@ mod abstractedAccount
 
         /////"functionCallsOnNftContract"///////////////////////////////////////////
         
+        //Message function to do a crossContractCall to the NFT smartContract instance with the paramNftAddress address///
+        //to mint an NFT.///
         #[ink(message)]
         pub fn mintNft(&mut self, paramNftAddress: AccountId)
         {
@@ -183,6 +206,8 @@ mod abstractedAccount
             .invoke();
         }
 
+        //Message function to do a crossContractCall to the NFT smartContract instance with the paramNftAddress address///
+        //to transfer the NFT with the paramIdToTransfer ID to the paramAddressTo address.///
         #[ink(message)]
         pub fn transferNft(&mut self, paramNftAddress: AccountId, paramIdToTransfer: u8, paramAddressTo: AccountId)
         {
@@ -204,6 +229,8 @@ mod abstractedAccount
             .invoke();
         }
 
+         //Message function to do a crossContractCall to the NFT smartContract instance with the paramNftAddress address///
+        //to get the owner address of the NFT with the paramIdToCheck ID.///        
         #[ink(message)]
         pub fn ownerOfNft(&mut self, paramNftAddress: AccountId, paramIdToCheck: u8) -> AccountId
         {
@@ -221,6 +248,8 @@ mod abstractedAccount
             returnValue
         }
 
+        //Message function to do a crossContractCall to the NFT smartContract instance with the paramNftAddress address///
+        //to get balance of NFTs that this abstractedAccount intance owns.///        
         #[ink(message)]
         pub fn balanceOfNft(&mut self,paramNftAddress: AccountId) -> u8
         {
@@ -242,6 +271,7 @@ mod abstractedAccount
         /////"tokenRelatedFunctions"////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////
         
+        //Message function to add a fungibleToken address to the list of assets that this abstractedAccount owns (even if its zero).///
         #[ink(message)]
         pub fn setToken(&mut self, paramTokenAddress: AccountId)
         {
@@ -252,13 +282,15 @@ mod abstractedAccount
             self.tokenCounter += 1;
             self.vecTokenAddresses.push(paramTokenAddress);
         }
-
+    
+        //Message function to calculate the number of fungibleToken assets that this abstractedAccount owns.///
         #[ink(message)]
         pub fn getVecTokenLength(&mut self) -> u8 
         {
             self.vecTokenAddresses.len().try_into().unwrap()
         }
 
+        //Message function to calculate the number of fungibleToken assets that this abstractedAccount own.///
         #[ink(message)]
         pub fn getVecTokenIndexValue(&mut self, paramIndex: u64) -> AccountId
         {
@@ -267,6 +299,8 @@ mod abstractedAccount
             self.vecTokenAddresses[index]
         }      
         
+         //Message function to get the list (vector) of fungibleToken assets addresses that this bstractedAccount owns (even///
+        //if theyre zero).///
         #[ink(message)]
         pub fn getAaTokentVec(&self) -> Vec<AccountId>
         {
@@ -277,6 +311,8 @@ mod abstractedAccount
 
         /////"functionCallsOnTokenContract"/////////////////////////////////////////
         
+        //Message function to do a crossContractCall to the fungibleToken smartContract instance with the paramTokenAddress address///
+        //to mint paramQuantity number of tokens.///
         #[ink(message)]
         pub fn mintTokens(&mut self, paramTokenAddress: AccountId, paramQuantity: u8)
         {
@@ -297,6 +333,8 @@ mod abstractedAccount
             .invoke();
         }
 
+        //Message function to do a crossContractCall to the fungibleToken smartContract instance with the paramTokenAddress address///
+        //to transfer paramQuantity number of tokens to the paramAddressTo address.///
         #[ink(message)]
         pub fn transferTokens(&mut self, paramTokenAddress: AccountId, paramQuantity: u8, paramAddressTo: AccountId)
         {
@@ -318,6 +356,8 @@ mod abstractedAccount
             .invoke();
         }
 
+        //Message function to do a crossContractCall to the fungibleToken smartContract instance with the paramTokenAddress address///
+        //to get the balance of tokens that this abstractedAccount intance owns.///        
         #[ink(message)]
         pub fn balanceOfTokens(&mut self, paramTokenAddress: AccountId) -> u8
         {
@@ -335,6 +375,8 @@ mod abstractedAccount
             returnValue
         }
 
+        //Message function to do a crossContractCall to the fungibleToken smartContract instance with the paramTokenAddress address///
+        //to get the decimals that uses.///
         #[ink(message)]
         pub fn decimalsOfTokens(&mut self, paramTokenAddress: AccountId) -> u8
         {
