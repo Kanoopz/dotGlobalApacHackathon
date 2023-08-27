@@ -1,1 +1,4 @@
-.
+- git clone the repository
+- cd frontend
+- npm install / yarn install
+- npm run dev
