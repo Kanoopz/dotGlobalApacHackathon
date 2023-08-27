@@ -6,6 +6,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNotifications, useTxNotifications } from 'useink/notifications';
 import { Notifications } from '../Notifications';
 
+import kusama_gif from "./images/KUSAMA-GIFS_3.gif";
+import Pattern_1 from "./images/Pattern_1";
+import Pattern_2 from "./images/Pattern_2";
+
 import accountManagerFactoryMetadata from '../../metadata/accountManagerFactory.json';
 import abstractedAccountMetadata from '../../metadata/abstractedAccount.json';
 
@@ -256,397 +260,390 @@ export const HomePage: React.FC = () =>
 
 
 
+  const [isAlreadyConnected, setIsAlreadyConnected] = useState(false);
+
+  function walletConnect()
+  {
+    setIsAlreadyConnected(true);
+  }
+
+  function walletDisconnect()
+  {
+    setIsAlreadyConnected(false);
+  }
+
+
+
+
+
+
   return (
-    <section className="w-full mx-auto">
-      <Notifications />
-      {/*///////////////////////////////////////////////////////////////////////////////*/}
-      {/*///  DISPLAY CONNECTED EOA DATA & CONNECTION (RPCS & CHAINS BLOCKS) DATA  /////*/}
-      {/*///////////////////////////////////////////////////////////////////////////////*/}
-      <div style={{paddingLeft: '15rem'}} >
-        {/*///////////////////////////////////////////////////////////////////////////////*/}
-        {/*///  TILTE AND SUBTITLE  //////////////////////////////////////////////////////*/}
-        {/*///////////////////////////////////////////////////////////////////////////////*/}
-        <h1 className="text-5xl font-bold text-blue-500">useink Kitchen Sink</h1>
+    <div className="w-full h-full mx-auto" style={{background: '#000000'}}>
+      <section style={{background: '#000000'}}>
+        <Notifications/>
 
-        <h2 className="text-2xl text-blue-500 mb-16">
-          See the contract definitions{' '}
-          <a
-            className="underline hover:opacity-80 transition duration-75"
-            href="https://github.com/paritytech/useink-kitchen-sink/blob/master/lib.rs"
-            target="_blank"
-            rel="noreferrer"
-          >
-            here
-          </a>
-        .
-        </h2>
+        <div className="w-full h-full mx-auto" style={{background: '#000000'}}>
+          <header>
+            <div className="relative w-full h-full" style={{paddingTop: '35rem'}}>
+              <div className="absolute inset-0 flex items-center justify-center z-0">
+                <img src={kusama_gif.src} style={{paddingRight: '15rem'}} alt="Kusama GIF" className="object-cover" />
+              </div>
 
-        {/*TEST CONNECTED*/}
+              <h1 className="absolute inset-x-0 inset-y-0 flex items-center justify-center text-white text-[64px] z-10">
+                <pre className="flex flex-row ">
+                  "/onChainMerklePasswords"
+                  <p className="text-pink-500 ml-[18px]">Project</p>
+                </pre>
+              </h1>
+            </div>
 
-        {
-          account &&
-          (
-            <h1>CONECTED AS: {account.address}</h1>
-          )
-        }
+            <div className="bottom-0 left-0 right-0 text-center mb-40" style={{position: 'absolute', paddingLeft: '42rem'}}>
+              <h1 className="text-white text-[48px]">
+                <pre className="flex flex-row justify-center">
+                  by <p className="text-pink-500 font-bold">"/oneManArmy"</p>
+                </pre>
+              </h1>
+            </div>
+          </header>
 
 
-        {/*///////////////////////////////////////////////////////////////////////////////*/}
-        {/*///  DISPLAY WALLET CONNECTION SECTION IF NOT CONNECTED ALREADY  //////////////*/}
-        {/*///////////////////////////////////////////////////////////////////////////////*/}
-
-        <div className="mt-8">
-          {
-            !account && 
-            (
-              <ul className="flex flex-col gap-4">
-
-                {/*///  DISPLAY INSTALLED WALLETS  ///////////////////////////////////////////////*/}
-                {
-                  installedWallets.length > 0 ? 
-                      (
-                          <>
-                            <h2 className="text-xl font-bold">Connect a Wallet</h2>
-                            <h3 className="text-md">Installed Wallets</h3>
-
-
-                            {
-                              installedWallets.map
-                              (
-                                (w) => 
-                                (
-                                  <li key={w.title}>
-                                    <button
-                                      onClick={() => connect(w.extensionName)}
-                                      className="flex items-center w-full rounded-2xl text-white px-6 py-4 bg-blue-500 hover:bg-blue-600 transition duration-75"
-                                    >
-                                      <img className="w-12 mr-2" src={w.logo.src} alt={w.logo.alt} />
-                                            
-                                            
-                                      Connect to {w.title}
-                                    </button>
-                                  </li>
-                                )
-                              )
-                            }
-                          </>
-                      ) 
-                  : 
-                      (
-                          <h2 className="text-xl font-bold">You don&apos;t have any wallets installed...</h2>
-                      )
-                }
-
-
-                {/*///  DISPLAY UNINSTALLED WALLETS  /////////////////////////////////////////////*/}
-                {
-                  uninstalledWallets.length > 0 && 
-                  (
-                    <>
-                      <h3 className="text-md">Uninstalled Wallets</h3>
-
-                      {
-                        uninstalledWallets.map
-                        (
-                          (w) => 
-                          (
-                            <li key={w.title}>
-                              <a
-                                href={w.installUrl}
-                                target="_blank"
-                                className="flex items-center w-full rounded-2xl text-white px-6 py-4 bg-blue-500 hover:bg-blue-600 transition duration-75"
-                              >
-                                  <img className="w-12 mr-2" src={w.logo.src} alt={w.logo.alt} />
-                                  Install {w.title}
-                              </a>
-                            </li>
-                          )
-                        )
-                      }
-                    </>
-                  )
-                }
-              </ul>
-            )
-           }
-
-
-          {/*///////////////////////////////////////////////////////////////////////////////*/}
-          {/*///  DISPLAY CONNECTED WALLET DATA  ///////////////////////////////////////////*/}
-          {/*///////////////////////////////////////////////////////////////////////////////*/}
-          <ul className="list-none flex flex-col gap-12 mt-8">
-          {
-            account && 
-            (
-              <>
-                {/*///  DISCONNECT BUTTON  ///////////////////////////////////////////////////////*/}
-                <li>
-                  <button
-                    onClick={disconnect}
-                    className="rounded-2xl text-white px-6 py-4 bg-blue-500 hover:bg-blue-600 transition duration-75"
-                  >
-                    Disconnect
+          <body style={{paddingTop: '6rem', background: '#000000'}}>
+            <div style={{paddingTop: '3rem', display: 'flex', alignItems: 'center', justifyContent: 'center',}}>
+            {
+              (!isAlreadyConnected) ?
+                <>
+                  <button onClick={walletConnect} className="rounded-2xl text-white px-6 py-4 bg-pink-500 hover:bg-pink-600 transition duration-75">
+                    connectWalletToApp
                   </button>
-                </li>
+                </>
+              :
+                <>
+                  {/*///////////////////////////////////////////////////////////////////////////////*/}
+                  {/*///  DISPLAY WALLET CONNECTION SECTION IF NOT CONNECTED ALREADY  //////////////*/}
+                  {/*///////////////////////////////////////////////////////////////////////////////*/}
+                  <div className="mt-8">
+                    {
+                      !account && 
+                      (
+                        <ul className="flex flex-col gap-4">
 
-                {/*///  CONNECTED WALLET DATA ////////////////////////////////////////////////////*/}
-                <li>
-                  <b>You are connected as:</b>
-
-
-                  <span className="ml-4 dark:bg-slate-600 bg-slate-200 rounded-lg py-2 px-2">
-                    {account?.name || account?.address}
-                  </span>
-                </li>
-
-                {
-                  accounts?.map
-                  (
-                    (acc) => account !== acc && 
-                    (
-                        <li key={acc.address} className="flex flex-col">
-
-                          <b>Connect to {acc.name ? acc.name : 'wallet'}</b>
-
-
-                          <button
-                            onClick={() => setAccount(acc)}
-                            className="rounded-2xl text-white px-4 py-2 mt-2 bg-blue-500 hover:bg-blue-600 transition duration-75"
-                          >
-                            {acc.address}
-                          </button>
-
-                        </li>
-                    ),
-                  )
-                }
-
-                <li>
-                  <b>Your Free Balance:</b>
-
-                  <span className="ml-4 dark:bg-slate-600 bg-slate-200 rounded-lg py-2 px-2">
-                    {formatBalance(balance?.freeBalance, { decimals: 12, withSi: true })}
-                  </span>
-                </li>
-              </>
-            )
-          }
-                
-                
-          <li>
-            <b>Astar Current Block:</b>
-                  
-                  
-            <span className="ml-4 dark:bg-slate-600 bg-slate-200 rounded-lg py-2 px-2">
-              {astarBlockNumber?.blockNumber === undefined ? '--' : astarBlockNumber.blockNumber.toLocaleString()}
-            </span>
-          </li>
+                          {/*///  DISPLAY INSTALLED WALLETS  ///////////////////////////////////////////////*/}
+                          {
+                            installedWallets.length > 0 ? 
+                                (
+                                    <>
+                                      <h2 className="text-xl font-bold">Select a wallet to connect</h2>
+                                      <h3 className="text-md">Installed Wallets</h3>
 
 
-            {/*///////////////////////////////////////////////////////////////////////////////*/}
-            {/*///  DISPLAY AVAILABLE RPC OPTIONS  ///////////////////////////////////////////*/}
-            {/*///////////////////////////////////////////////////////////////////////////////*/}
-            <li>
-              <b>Change a chain&apos;s active RPC url: (e.g. Astar)</b>
+                                      {
+                                        installedWallets.map
+                                        (
+                                          (w) => 
+                                          (
+                                            <li key={w.title}>
+                                              <button
+                                                onClick={() => connect(w.extensionName)}
+                                                className="flex items-center w-full rounded-2xl text-white px-6 py-4 bg-pink-500 hover:bg-pink-600 transition duration-75"
+                                              >
+                                                <img className="w-12 mr-2" src={w.logo.src} alt={w.logo.alt} />
+                                                      
+                                                      
+                                                Connect to {w.title}
+                                              </button>
+                                            </li>
+                                          )
+                                        )
+                                      }
+                                    </>
+                                ) 
+                            : 
+                                (
+                                    <h2 className="text-xl font-bold">You don&apos;t have any wallets installed...</h2>
+                                )
+                          }
 
-              <ul className="px-0 m-0 mt-6 gap-4 grid grid-cols-2 items-center">
+
+                          {/*///  DISPLAY UNINSTALLED WALLETS  /////////////////////////////////////////////*/}
+                          {
+                            uninstalledWallets.length > 0 && 
+                            (
+                              <>
+                                <h3 className="text-md">Uninstalled Wallets</h3>
+
+                                {
+                                  uninstalledWallets.map
+                                  (
+                                    (w) => 
+                                    (
+                                      <li key={w.title}>
+                                        <a
+                                          href={w.installUrl}
+                                          target="_blank"
+                                          className="flex items-center w-full rounded-2xl text-white px-6 py-4 bg-pink-500 hover:bg-pink-600 transition duration-75"
+                                        >
+                                            <img className="w-12 mr-2" src={w.logo.src} alt={w.logo.alt} />
+                                            Install {w.title}
+                                        </a>
+                                      </li>
+                                    )
+                                  )
+                                }
+                              </>
+                            )
+                          }
+                        </ul>
+                      )
+                    }
+
+
+                    {/*///////////////////////////////////////////////////////////////////////////////*/}
+                    {/*///  DISPLAY CONNECTED WALLET DATA  ///////////////////////////////////////////*/}
+                    {/*///////////////////////////////////////////////////////////////////////////////*/}
+                    <ul className="list-none flex flex-col gap-12 mt-8">
+                    {
+                      account && 
+                      (
+                        <>
+                          {/*///  CONNECTED WALLET DATA ////////////////////////////////////////////////////*/}
+                          <li>
+                            <b>You are connected as:</b>
+
+
+                            <span className="ml-4 dark:bg-slate-600 bg-slate-200 rounded-lg py-2 px-2">
+                              {account?.name || account?.address}
+                            </span>
+                          </li>
+
+                          <li>
+                            <b>With address:</b>
+
+
+                            <span className="ml-4 dark:bg-slate-600 bg-slate-200 rounded-lg py-2 px-2">
+                              {account?.address}
+                            </span>
+                          </li>
+
+
+                          {/*///  DISCONNECT BUTTON  ///////////////////////////////////////////////////////*/}
+                          <li style={{display: 'flex', alignItems: 'center', justifyContent: 'center',}}>
+                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center',}}>
+                              <button
+                                onClick={disconnect, walletDisconnect}
+                                className="rounded-2xl text-white px-6 py-4 bg-pink-500 hover:bg-pink-600 transition duration-75"
+                                style={{display: 'flex', alignItems: 'center', justifyContent: 'center',}}
+                              >
+                                Disconnect
+                              </button>
+                            </div>
+                          </li>
+
+                          {
+                            accounts?.map
+                            (
+                              (acc) => account !== acc && 
+                              (
+                                  <li key={acc.address} className="flex flex-col">
+
+                                    <b>Connect to {acc.name ? acc.name : 'wallet'}</b>
+
+
+                                    <button
+                                      onClick={() => setAccount(acc)}
+                                      className="rounded-2xl text-white px-4 py-2 mt-2 bg-blue-500 hover:bg-blue-600 transition duration-75"
+                                    >
+                                      {acc.address}
+                                    </button>
+
+                                  </li>
+                              ),
+                            )
+                          }
+                        </>
+                      )
+                    }
+                    </ul>
+                  </div>
+                </>
+            }
+            </div>
+
+            <div style={{paddingTop: '5rem'}}>
               {
-                rpcs.map
-                (
-                  (rpc) => 
-                  (
-                    <li key={rpc} className="p-0">
-                      <button
-                        className="rounded-2xl w-full text-white px-6 py-4 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 hover:disabled:bg-blue-300 transition duration-75"
-                        disabled={rpc === astarRpc}
-                        onClick={() => setChainRpc(rpc, 'astar')}
-                       >
+                isAlreadyConnected ?
+                <>
+                  <div style={{paddingTop: '5rem'}}>
+                    {
+                      (!checkingAa) ?
+                      <>
+                        {/*///////////////////////////////////////////////////////////////////////////////*/}
+                        {/*///  DISPLAY ACCOUNT MANAGER FACTORY CONTRACT INTANCE  ////////////////////////*/}
+                        {/*///////////////////////////////////////////////////////////////////////////////*/}
+                        <div className="max-w-3xl w-full mx-auto py-16 px-4">
+                          {/*///////////////////////////////////////////////////////////////////////////////*/}
+                          {/*///  DIRECT INTERACTION WITH ACCOUNT MANAGER FACTORY SMART CONTRACTS  /////////*/}
+                          {/*///////////////////////////////////////////////////////////////////////////////*/}
 
-                        {rpc}
-                      </button>
+                          <div>
+                            {/*///  DISPLAY ACCOUNT MANAGER FACTORY SECTION  /////////////////////////////////*/}
+                            <div style={{paddingTop: '1rem', paddingLeft: '15rem'}}>
+                              <button className="w-[220px] h-[50px] mt-[20px] bg-pink-500 text-white rounded-lg" onClick={initializeAbstractedAccountsFunction}><h1>initializeAbstractedAccounts</h1></button>
 
-                    </li>
-                  )
-                )
+                              {
+                                /*
+                                <div style={{paddingTop: '2rem'}}>
+                                  <h2>checking: {accountAddressConnectedToFactory}</h2>
+                                </div>
+                                */
+                              }
+
+
+                              {/*///  DISPLAY SUBSCRIPTIONS  ///////////////////////////////////////////////////*/}
+                              <div style={{paddingTop: '6rem'}}>
+                                {/*///  eoaCreatedAaQuantity  ////////////////////////////////////////////////////*/}
+                                <div style={{paddingTop: '4rem', display: 'inline'}}>
+                                  <h2 style={{display: 'inline'}} className="text-pink-500">userAbstractedAccountsCreated: </h2> <h2 style={{display: 'inline'}}>{pickDecoded(shibuyaGetAaQuantitySubcription.result)?.toString() || '--'}</h2>
+                                </div>
+                          
+
+                                {/*///  accountAddressesVec  /////////////////////////////////////////////////////*/}
+                                <div style={{paddingTop: '1.5rem'}}>
+                                  <h2 className="text-pink-500">userAbstractedAccountsAvailable: {/*{pickDecoded(shibuyaGetAaVectorSubscription.result)?.toString() || '--'}*/}</h2>
+
+                                  {
+                                    pickDecoded(shibuyaGetAaVectorSubscription.result)?.map
+                                    (
+                                      (aa) => 
+                                      (
+                                        <li>
+                                          {aa}
+                                        </li>
+                                      )
+                                    )
+                                  }
+                                </div>
+
+
+                                {/*///  eoaLastAddressCreated  ///////////////////////////////////////////////////*/}
+                                <div style={{paddingTop: '1.5rem'}}>
+                                  <h2 className="text-pink-500">eoaLastAaCreatedAddress: </h2> <h2>{pickDecoded(shibuyaGetLastAaCreatedAddressSubscription.result)?.toString() || '--'}</h2>
+                                </div>
+
+
+                                {/*///  aaAddressFromVecIndex  ///////////////////////////////////////////////////*/}
+                                <div style={{paddingTop: '1.5rem'}}>
+                                  <h2 className="text-pink-500"> getAaAddressFromVecIndex:</h2>
+
+
+                                  <div>
+                                    <input type="text" placeholder="vecIdToCheck" style={{background: 'rgb(105, 103, 116)', display: 'inline', justifyContent: 'space-between'}} onChange={handleSpecificAddressIndexParam} value={changingGetSpecificAaAddressIndexParamTx}></input>
+                                    <button onClick={getSpecificAaAndressFromVecFunc} style={{display: 'inline', justifyContent: 'space-between'}} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">checkAddress</button>
+                                  </div>
+                                  
+                                  <h2 className="text-pink-500" style={{display: 'inline'}}>Result: </h2><h2 style={{display: 'inline'}}>{pickDecoded(shibuyaGetSpecificAaFromVectorSubscription.result)?.toString() || '--'}</h2>
+                                </div>
+                              </div>
+
+
+                              {/*///  DISPLAY TRANSACTIONS  ////////////////////////////////////////////////////*/}
+                              <div style={{paddingTop: '6rem'}}>
+                                <div style={{paddingTop: '4rem'}}>
+                                  <div>
+                                    <h2 className="text-pink-500">createAccountTransaction:</h2>
+
+                                    <div>
+                                      <input type="text" placeholder="passwordForNewAccount" style={{background: 'rgb(105, 103, 116)'}} onChange={handleCreatePasswordParam} value={changingCreateAccountPasswordParamTx}></input>
+                                      <button onClick={createAccountFunc} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setPasswordForNewAccount</button>
+                                    </div>
+                                    <button onClick={() => createAccountTx.signAndSend([createAccountPasswordParamTx])} className="w-[150px] h-[50px] mt-[20px] bg-pink-500 text-white rounded-lg"> 
+                                      {shouldDisable(createAccountTx) ? 'SETTING' : 'createAccount'}
+                                    </button>
+                                  </div>
+
+
+                                  <div style={{paddingTop: '3rem'}}>
+                                    <h2 className="text-pink-500">recoverAccountTransaction:</h2>
+
+                                    <div>
+                                      <input type="text" placeholder="accountAddress" style={{background: 'rgb(105, 103, 116)'}} onChange={handleRecoverAddressParamTx} value={changingRecoverAaAddressParamTx}></input>
+                                      <button onClick={setRecoverAddressParamFunc} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setAccountAddressToRecover</button>
+                                    </div>
+
+
+                                    <div>
+                                      <input type="text" placeholder="accountPasswordString" style={{background: 'rgb(105, 103, 116)'}} onChange={handleRecoverPasswordParamTx} value={changingRecoverAaPasswordParamTx}></input>
+                                      <button onClick={setRecoverPasswordParamFunc} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setAccountPasswordToRecover</button>
+                                    </div>
+
+
+                                    <div>
+                                      <input type="text" placeholder="accountNewPasswordHash" style={{background: 'rgb(105, 103, 116)', display: 'inline'}} onChange={handleRecoverNewPasswordHashParamTx} value={changingRecoverAaNewPasswordHashParamTx}></input>
+                                      <button onClick={setRecoverNewPasswordHashParamFunc} className="w-[280px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg" style={{display: 'inline'}}>setNewPasswordHashForAccount</button>
+                                    </div>
+
+
+                                    <button onClick={() => recoverAccountTx.signAndSend([recoverAaAddressParamTx, recoverAaPasswordParamTx, recoverAaNewPasswordHashParamTx])} className="w-[150px] h-[50px] mt-[20px] bg-pink-500 text-white rounded-lg">
+                                      {shouldDisable(recoverAccountTx) ? 'SETTING' : 'recoverAccount'}
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+
+                          {/*///////////////////////////////////////////////////////////////////////////////*/}
+                          {/*///  INTERACTION WITH COMPONENT ABSTRACTED ACOCUNT INSTANCE  //////////////////*/}
+                          {/*///////////////////////////////////////////////////////////////////////////////*/}
+
+                          <div style={{paddingTop: '13rem', paddingLeft: '15rem'}}>
+                            <div>
+                              <input type="text" placeholder="aaInstanceAddress" style={{background: 'rgb(105, 103, 116)'}} onChange={handleAaToInteractAddress} value={changingAaToInteractAddress}></input>
+                              <button onClick={setAaToInteractAddressFunc} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setAaAddressToInteractWith</button>
+                            </div>
+                            <div><button onClick={goToComponent} className="w-[190px] h-[50px] mt-[20px] bg-pink-500 text-white rounded-lg">interactWithAaInstance</button></div>
+                          </div>
+                        </div>
+                      </>
+                      :
+                      <>
+                        {/*///////////////////////////////////////////////////////////////////////////////*/}
+                        {/*///  DISPLAY ABSTRACTED ACCOUNT CONTRACT INSTANCE   ///////////////////////////*/}
+                        {/*///////////////////////////////////////////////////////////////////////////////*/}
+                        <div style={{paddingLeft: '5rem'}}>
+                          <div>
+                            <AaInstanceComponent address={testVar} userConnected={accountAddressConnectedToFactory}/>
+                          </div>
+
+
+                          <div style={{paddingTop: '8rem'}}>
+                            <button onClick={returnToMain} className="w-[190px] h-[50px] mt-[20px] bg-pink-500 text-white rounded-lg">returnToMain</button>
+                          </div>
+
+
+                          <div style={{paddingTop: '6rem'}}>
+                          </div>
+                        </div>
+                      </>
+                    }
+                  </div>
+                </>
+                :
+                <></>
               }
-              </ul>
-            </li>
-
-
-            {/*///////////////////////////////////////////////////////////////////////////////*/}
-            {/*///  DISPLAY CHAINS MINED BLOCKS STATUS  ///////////////////////////////////////*/}
-            {/*///////////////////////////////////////////////////////////////////////////////*/}
-            <li>
-              <b>
-                Get all blocks from configured chains using:{' '}
-                <code className="p-2 rounded-md bg-slate-500">useBlockHeaders()</code>
-              </b>
-
-
-              <ul className="px-0 m-0 mt-6 gap-4 flex items-center flex-col md:flex-row">
-              {
-                (Object.keys(allChainBlockHeaders) as ChainId[]).map
-                (
-                  (chainId) => 
-                  (
-                    <li key={chainId} className="p-0">
-                      <span>
-                        <b>{chainId}:</b> {allChainBlockHeaders[chainId]?.blockNumber?.toLocaleString() || '--'}{' '}
-                      </span>
-                    </li>
-                  )
-                )
-              }
-              </ul>
-            </li>
-          </ul>
+            </div>
+          </body>
         </div>
-      </div>
-
-
-      {/*///////////////////////////////////////////////////////////////////////////////*/}
-      {/*///  DISPLAY CONTRACT INSTANCES  //////////////////////////////////////////////*/}
-      {/*///////////////////////////////////////////////////////////////////////////////*/}
-      <div style={{paddingTop: '5rem'}}>
-        {
-          (!checkingAa) ?
-          <>
-            {/*///////////////////////////////////////////////////////////////////////////////*/}
-            {/*///  DISPLAY ACCOUNT MANAGER FACTORY CONTRACT INTANCE  ////////////////////////*/}
-            {/*///////////////////////////////////////////////////////////////////////////////*/}
-            <div className="max-w-3xl w-full mx-auto py-16 px-4">
-              {/*///////////////////////////////////////////////////////////////////////////////*/}
-              {/*///  DIRECT INTERACTION WITH ACCOUNT MANAGER FACTORY SMART CONTRACTS  /////////*/}
-              {/*///////////////////////////////////////////////////////////////////////////////*/}
-
-              <div>
-                {/*///  DISPLAY ACCOUNT MANAGER FACTORY SECTION  /////////////////////////////////*/}
-                <div style={{paddingTop: '7rem', paddingLeft: '15rem'}}>
-                  <button onClick={initializeAbstractedAccountsFunction}><h1>initializeAbstractedAccounts</h1></button>
-
-
-                  <div style={{paddingTop: '2rem'}}>
-                    <h2>checking: {accountAddressConnectedToFactory}</h2>
-                  </div>
-
-
-                  {/*///  DISPLAY SUBSCRIPTIONS  ///////////////////////////////////////////////////*/}
-                  <div style={{paddingTop: '6rem'}}>
-                    {/*///  eoaCreatedAaQuantity  ////////////////////////////////////////////////////*/}
-                    <div style={{paddingTop: '4rem'}}>
-                      <h2>eoaCreatedAaQuantity: {pickDecoded(shibuyaGetAaQuantitySubcription.result)?.toString() || '--'}</h2>
-                    </div>
-              
-
-                    {/*///  accountAddressesVec  /////////////////////////////////////////////////////*/}
-                    <div style={{paddingTop: '4rem'}}>
-                      <h2>aaAddressesDisplay: {/*{pickDecoded(shibuyaGetAaVectorSubscription.result)?.toString() || '--'}*/}</h2>
-
-                      {
-                        pickDecoded(shibuyaGetAaVectorSubscription.result)?.map
-                        (
-                          (aa) => 
-                          (
-                            <li>
-                              {aa}
-                            </li>
-                          )
-                        )
-                      }
-                    </div>
-
-
-                    {/*///  eoaLastAddressCreated  ///////////////////////////////////////////////////*/}
-                    <div style={{paddingTop: '4rem'}}>
-                      <h2>eoaLastAaCreatedAddress: {pickDecoded(shibuyaGetLastAaCreatedAddressSubscription.result)?.toString() || '--'}</h2>
-                    </div>
-
-
-                    {/*///  aaAddressFromVecIndex  ///////////////////////////////////////////////////*/}
-                    <div style={{paddingTop: '4rem'}}>
-                      <h2> getAaAddressFromVecIndex:</h2>
-
-
-                      <div>
-                        <div><input type="text" placeholder="vecIdToCheck" style={{background: 'rgb(105, 103, 116)'}} onChange={handleSpecificAddressIndexParam} value={changingGetSpecificAaAddressIndexParamTx}></input></div>
-                        <div><button onClick={getSpecificAaAndressFromVecFunc}>checkAddress</button></div>
-                      </div>
-                      
-                      <h2>Result: {pickDecoded(shibuyaGetSpecificAaFromVectorSubscription.result)?.toString() || '--'}</h2>
-                    </div>
-                  </div>
-
-
-                  {/*///  DISPLAY TRANSACTIONS  ////////////////////////////////////////////////////*/}
-                  <div style={{paddingTop: '6rem'}}>
-                    <div style={{paddingTop: '4rem'}}>
-                      <div>
-                        <div><h2>createAccountTransaction:</h2></div>
-
-                        <div><input type="text" placeholder="passwordForNewAccount" style={{background: 'rgb(105, 103, 116)'}} onChange={handleCreatePasswordParam} value={changingCreateAccountPasswordParamTx}></input></div>
-                        <div><button onClick={createAccountFunc}>setPasswordForNewAccount</button></div>
-                        <button onClick={() => createAccountTx.signAndSend([createAccountPasswordParamTx])} style={{paddingTop: '1rem'}}>
-                          {shouldDisable(createAccountTx) ? 'SETTING' : 'createAccount'}
-                        </button>
-                      </div>
-
-
-                      <div style={{paddingTop: '6rem'}}>
-                        <h2>recoverAccountTransaction:</h2>
-
-                        <div><input type="text" placeholder="accountAddress" style={{background: 'rgb(105, 103, 116)'}} onChange={handleRecoverAddressParamTx} value={changingRecoverAaAddressParamTx}></input></div>
-                        <div><button onClick={setRecoverAddressParamFunc}>setAccountAddressToRecover</button></div>
-
-
-                        <div style={{paddingTop: '0.55rem'}}><input type="text" placeholder="accountPasswordString" style={{background: 'rgb(105, 103, 116)'}} onChange={handleRecoverPasswordParamTx} value={changingRecoverAaPasswordParamTx}></input></div>
-                        <div><button onClick={setRecoverPasswordParamFunc}>setAccountPasswordToRecover</button></div>
-
-
-                        <div style={{paddingTop: '0.55rem'}}><input type="text" placeholder="accountNewPasswordHash" style={{background: 'rgb(105, 103, 116)'}} onChange={handleRecoverNewPasswordHashParamTx} value={changingRecoverAaNewPasswordHashParamTx}></input></div>
-                        <div><button onClick={setRecoverNewPasswordHashParamFunc}>setNewPasswordHashForAccountToRecover</button></div>
-
-
-                        <button onClick={() => recoverAccountTx.signAndSend([recoverAaAddressParamTx, recoverAaPasswordParamTx, recoverAaNewPasswordHashParamTx])} style={{paddingTop: '1rem'}}>
-                          {shouldDisable(recoverAccountTx) ? 'SETTING' : 'recoverAccount'}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-              {/*///////////////////////////////////////////////////////////////////////////////*/}
-              {/*///  INTERACTION WITH COMPONENT ABSTRACTED ACOCUNT INSTANCE  //////////////////*/}
-              {/*///////////////////////////////////////////////////////////////////////////////*/}
-
-              <div style={{paddingTop: '10rem', paddingLeft: '15rem'}}>
-                <div><input type="text" placeholder="aaInstanceAddress" style={{background: 'rgb(105, 103, 116)'}} onChange={handleAaToInteractAddress} value={changingAaToInteractAddress}></input></div>
-                <div><button onClick={setAaToInteractAddressFunc}>setAaAddressToInteractWith</button></div>
-                <div><button onClick={goToComponent}>interactWithAaInstance</button></div>
-              </div>
-            </div>
-          </>
-          :
-          <>
-            {/*///////////////////////////////////////////////////////////////////////////////*/}
-            {/*///  DISPLAY ABSTRACTED ACCOUNT CONTRACT INSTANCE   ///////////////////////////*/}
-            {/*///////////////////////////////////////////////////////////////////////////////*/}
-            <div style={{paddingLeft: '15rem'}}>
-              <div>
-                <h2>aaInstanceComponent:</h2>
-              </div>
-
-
-              <div style={{paddingTop: '3rem'}}>
-                <AaInstanceComponent address={testVar} userConnected={accountAddressConnectedToFactory}/>
-              </div>
-
-              <button onClick={returnToMain} style={{paddingTop: '4rem'}}>returnToMain</button>
-            </div>
-          </>
-        }
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
+
+
+
+
+
+
+
+
+        

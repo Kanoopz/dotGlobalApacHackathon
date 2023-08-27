@@ -260,6 +260,14 @@ mod accountManagerFactory
         }
 
         #[ink(message)]
+        pub fn getAccountAaVec(&self, paramAddress: AccountId) -> Vec<AccountId>
+        {
+            let ownerAccounts = self.userAccountsBounded.get(paramAddress).unwrap();
+
+            ownerAccounts
+        }
+
+        #[ink(message)]
         pub fn getLastAddressCreated(&self) -> AccountId
         {
             let caller = self.env().caller();

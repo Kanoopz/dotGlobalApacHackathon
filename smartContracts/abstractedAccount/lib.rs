@@ -154,6 +154,14 @@ mod abstractedAccount
             self.vecNftAddresses[index]
         }
 
+        #[ink(message)]
+        pub fn getAaNftVec(&self) -> Vec<AccountId>
+        {
+            let vecToReturn = &self.vecNftAddresses;
+
+            vecToReturn.to_vec()
+        }
+
         /////"functionCallsOnNftContract"///////////////////////////////////////////
         
         #[ink(message)]
@@ -257,7 +265,15 @@ mod abstractedAccount
             let index = paramIndex as usize;
 
             self.vecTokenAddresses[index]
-        }        
+        }      
+        
+        #[ink(message)]
+        pub fn getAaTokentVec(&self) -> Vec<AccountId>
+        {
+            let vecToReturn = &self.vecTokenAddresses;
+
+            vecToReturn.to_vec()
+        }
 
         /////"functionCallsOnTokenContract"/////////////////////////////////////////
         

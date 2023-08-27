@@ -280,33 +280,39 @@ function AaInstanceComponent(props)
 
     return (
         <div>
-            <div style={{paddingTop: '2rem'}}>
-                <h2>USER CONNECTED ADDRESS: {props.userConnected}</h2>
-            </div>
-
-
             <div>
-                <h1>abstractedAccountInstance: {props.address}</h1>
+                <h1 className="text-pink-500 text-[64px]">abstractedAccountData</h1>
             </div>
 
 
             <div style={{paddingTop: '2rem'}}>
-                <h2>aaOwner: {pickDecoded(shibuyaGetAaOwner.result)?.toString() || '--'}</h2>
-                <h2>aaAddressFromCode: {pickDecoded(shibuyaGetAaAddressFromCode.result)?.toString() || '--'}</h2>
+                <div>
+                    <h2 className="text-pink-500" style={{display: 'inline'}}>aaOwner: </h2>
+                    <h2 style={{display: 'inline'}}>{pickDecoded(shibuyaGetAaOwner.result)?.toString() || '--'}</h2>
+                </div>
+
+                <div>
+                    <h2 className="text-pink-500" style={{display: 'inline'}}>aaAddressFromCode: </h2>
+                    <h2 style={{display: 'inline'}}>{pickDecoded(shibuyaGetAaAddressFromCode.result)?.toString() || '--'}</h2>
+                </div>
             </div>
 
             <div style={{paddingTop: '8rem'}}>
-                <div><h1>abstractedAccountAssets:</h1></div>
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}><h1 className="text-pink-500 text-[40px]">abstractedAccountAssets:</h1></div>
 
 
-                <div style={{paddingTop: '3rem'}}>
+                <div style={{paddingTop: '3rem', display: 'flex'}}>
                     <div>
-                        <div><h1>//NFTs/////</h1></div>
-                        <div><h2>aaNftAssetsQuantity: {pickDecoded(shibuyaGetNftAssetsQuantity.result)?.toString() || '--'}</h2></div>
+                        <div><h1 className="text-pink-500">//NFTs/////</h1></div>
+
+                        <div>
+                            <h2 className="text-pink-500" style={{display: 'inline'}}>aaNftAssetsQuantity: </h2>
+                            <h2 style={{display: 'inline'}}>{pickDecoded(shibuyaGetNftAssetsQuantity.result)?.toString() || '--'}</h2>
+                        </div>
 
 
                         <div style={{paddingTop: '2.5rem'}}>
-                            <div><h2>nftAssetsAddresses</h2></div>
+                            <div><h2 className="text-pink-500">nftAssetsAddresses</h2></div>
                             {/*<div>{pickDecoded(shibuyaGetNftAddresssesVec.result)?.toString() || '--'}</div>*/}
                             {
                                 pickDecoded(shibuyaGetNftAddresssesVec.result)?.map
@@ -323,68 +329,94 @@ function AaInstanceComponent(props)
 
 
                         <div style={{paddingTop: '0.45rem'}}>
-                            <div><input type="text" placeholder="nftAddressToAdd" style={{background: 'rgb(105, 103, 116)'}} onChange={handleSetNftAddressParam} value={changingSetNftAddressParamTx}></input></div>
-                            <div><button onClick={setNftAddressFunction}>setNftAddressToAdd</button></div>
+                            <div>
+                                <input type="text" placeholder="nftAddressToAdd" style={{background: 'rgb(105, 103, 116)'}} onChange={handleSetNftAddressParam} value={changingSetNftAddressParamTx}></input>
+                                <button onClick={setNftAddressFunction} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setNftAddressToAdd</button>
+                            </div>
 
 
-                            <button onClick={() => setNftAddressTx.signAndSend([changingSetNftAddressParamTx])} style={{paddingTop: '0.13rem'}}>
+                            <button onClick={() => setNftAddressTx.signAndSend([changingSetNftAddressParamTx])} style={{paddingTop: '0.13rem'}} className="w-[150px] h-[50px] mt-[20px] bg-pink-500 text-white rounded-lg">
                                 {shouldDisable(setNftAddressTx) ? 'SETTING' : 'addNftAddress'}
                             </button>
                         </div>
 
 
-                        <div style={{paddingTop: '2.5rem'}}>
-                            <div><h2>checkNftAssetBalance:</h2></div>
-                            <div><input type="text" placeholder="nftAssetToCheck" style={{background: 'rgb(105, 103, 116)'}} onChange={handleCheckNftParam} value={changingNftAssetToCheckParamTx}></input></div>
-                            <div><button onClick={setNftAssetToCheck}>checkBalance</button></div>
+                        <div style={{paddingTop: '4rem'}}>
+                            <div><h2 className="text-pink-500">checkNftAssetBalance:</h2></div>
+                            
+                            <div>
+                                <input type="text" placeholder="nftAssetToCheck" style={{background: 'rgb(105, 103, 116)'}} onChange={handleCheckNftParam} value={changingNftAssetToCheckParamTx}></input>
+                                <button onClick={setNftAssetToCheck} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">checkBalance</button>
+                            </div>
 
-                            <div style={{paddingTop: '0.35rem'}}><h2>Asset: {nftAssetToCheckParamTx}</h2></div>
-                            <div><h2>assetBalance: {pickDecoded(shibuyaGetNftAssetBalance.result)?.toString() || '--'}</h2></div>    
+                            <div style={{paddingTop: '0.35rem'}}>
+                                <h2 style={{display: 'inline'}} className="text-pink-500">Asset: </h2>
+                                <h2 style={{display: 'inline'}}>{nftAssetToCheckParamTx}</h2>
+                            </div>
+
+                            <div>
+                                <h2 style={{display: 'inline'}} className="text-pink-500">assetBalance: </h2>
+                                <h2 style={{display: 'inline'}}> {pickDecoded(shibuyaGetNftAssetBalance.result)?.toString() || '--'}</h2>
+                            </div>    
                         </div>
 
 
-                        <div style={{paddingTop: '2.5rem'}}>
-                            <div><h2>mintNftAsset:</h2></div>
-                            <div><input type="text" placeholder="nftAssetToMintAddress" style={{background: 'rgb(105, 103, 116)'}} onChange={handleNftAssetAddressToMintParam} value={changingNftAssetAddressToMintParamTx}></input></div>
-                            <div><button onClick={setNftAssetAddressToMintFunction}>setNftAssetAddressToMint</button></div>
+                        <div style={{paddingTop: '4rem'}}>
+                            <div><h2 className="text-pink-500">mintNftAsset:</h2></div>
+
+                            <div>
+                                <input type="text" placeholder="nftAssetToMintAddress" style={{background: 'rgb(105, 103, 116)'}} onChange={handleNftAssetAddressToMintParam} value={changingNftAssetAddressToMintParamTx}></input>
+                                <button onClick={setNftAssetAddressToMintFunction} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setNftAssetAddressToMint</button>
+                            </div>
 
 
-                            <button onClick={() => mintNftAssetTx.signAndSend([nftAssetAddressToMintParamTx])} style={{paddingTop: '0.3rem'}}>
+                            <button onClick={() => mintNftAssetTx.signAndSend([nftAssetAddressToMintParamTx])} style={{paddingTop: '0.3rem'}} className="w-[150px] h-[50px] mt-[20px] bg-pink-500 text-white rounded-lg">
                                 {shouldDisable(mintNftAssetTx) ? 'SETTING' : 'mintNftAsset'}
                             </button>
                         </div>
 
 
-                        <div style={{paddingTop: '2.5rem'}}>
-                            <div>transferNftAsset:</div>
+                        <div style={{paddingTop: '4rem'}}>
+                            <div className="text-pink-500">transferNftAsset:</div>
 
 
-                            <div><input type="text" placeholder="nftAssetAddressToTransfer" style={{background: 'rgb(105, 103, 116)'}} onChange={handleNftAssetToTransferAddressParam} value={changingNftAssetToTransferAddressParamTx}></input></div>
-                            <div><button onClick={setNftAssetToTransferAddressFunction}>setNftAddressToTransfer</button></div>
+                            <div>
+                                <input type="text" placeholder="nftAssetAddressToTransfer" style={{background: 'rgb(105, 103, 116)'}} onChange={handleNftAssetToTransferAddressParam} value={changingNftAssetToTransferAddressParamTx}></input>
+                                <button onClick={setNftAssetToTransferAddressFunction} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setNftAddressToTransfer</button>
+                            </div>
 
 
-                            <div style={{paddingTop: '0.6rem'}}><input type="text" placeholder="nftAssetIdToTransfer" style={{background: 'rgb(105, 103, 116)'}} onChange={handleNftAssetToTransferIdParam} value={changingNftAssetToTransferIdParamTx}></input></div>
-                            <div><button onClick={setNftAssetToTransferIdFunction}>setNftIdToTransfer</button></div>
+                            <div style={{paddingTop: '0.6rem'}}>
+                                <input type="text" placeholder="nftAssetIdToTransfer" style={{background: 'rgb(105, 103, 116)'}} onChange={handleNftAssetToTransferIdParam} value={changingNftAssetToTransferIdParamTx}></input>
+                                <button onClick={setNftAssetToTransferIdFunction} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setNftIdToTransfer</button>
+                            </div>
 
 
-                            <div style={{paddingTop: '0.6rem'}}><input type="text" placeholder="nftAssetReceiverAddress" style={{background: 'rgb(105, 103, 116)'}} onChange={handleNftAssetToTransferReceiverAddressParam} value={changingNftAssetToTransferReceiverAddressParamTx}></input></div>
-                            <div><button onClick={setNftAssetToTransferReceiverAddressFunction}>setNftReceiverAddress</button></div>
+                            <div style={{paddingTop: '0.6rem'}}>
+                                <input type="text" placeholder="nftAssetReceiverAddress" style={{background: 'rgb(105, 103, 116)'}} onChange={handleNftAssetToTransferReceiverAddressParam} value={changingNftAssetToTransferReceiverAddressParamTx}></input>
+                                <button onClick={setNftAssetToTransferReceiverAddressFunction} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setNftReceiverAddress</button>
+                            </div>
 
 
-                            <button onClick={() => transferNftAssetTx.signAndSend([nftAssetToTransferAddressParamTx, nftAssetToTransferIdParamTx, nftAssetToTransferReceiverAddressParamTx])} style={{paddingTop: '0.3rem'}}>
+                            <button onClick={() => transferNftAssetTx.signAndSend([nftAssetToTransferAddressParamTx, nftAssetToTransferIdParamTx, nftAssetToTransferReceiverAddressParamTx])} style={{paddingTop: '0.3rem'}} className="w-[150px] h-[50px] mt-[20px] bg-pink-500 text-white rounded-lg">
                                 {shouldDisable(transferNftAssetTx) ? 'SETTING' : 'transferNftAsset'}
                             </button>
                         </div>
                     </div>
 
 
-                    <div style={{paddingTop: '8.5rem'}}>
-                        <div><h1>//TOKENs/////</h1></div>
-                        <div><h2>aaTokenAssetsQuantity: {pickDecoded(shibuyaGetTokenAssetsQuantity.result)?.toString() || '--'}</h2></div>
+                    {/*<div style={{paddingTop: '8.5rem'}}>*/}
+                    <div style={{paddingLeft: '23rem'}}>
+                        <div><h1 className="text-pink-500">//TOKENs/////</h1></div>
+                        
+                        <div>
+                            <h2 className="text-pink-500" style={{display: 'inline'}}>aaTokenAssetsQuantity: </h2>
+                            <h2 style={{display: 'inline'}}>{pickDecoded(shibuyaGetTokenAssetsQuantity.result)?.toString() || '--'}</h2>
+                        </div>
 
 
                         <div style={{paddingTop: '2.5rem'}}>
-                            <div><h2>tokenAssetsAddresses</h2></div>
+                            <div><h2 className="text-pink-500">tokenAssetsAddresses</h2></div>
                            {/*<div>{pickDecoded(shibuyaGetTokenAddresssesVec.result)?.toString() || '--'}</div>*/}
 
                             {
@@ -402,59 +434,83 @@ function AaInstanceComponent(props)
 
 
                         <div style={{paddingTop: '0.45rem'}}>
-                            <div><input type="text" placeholder="tokenAddressToAdd" style={{background: 'rgb(105, 103, 116)'}} onChange={handleSetTokenAddressParam} value={changingSetTokenAddressParamTx}></input></div>
-                            <div><button onClick={setTokenAddressFunction}>setTokenAddressToAdd</button></div>
+                            <div>
+                                <input type="text" placeholder="tokenAddressToAdd" style={{background: 'rgb(105, 103, 116)'}} onChange={handleSetTokenAddressParam} value={changingSetTokenAddressParamTx}></input>
+                                <button onClick={setTokenAddressFunction} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setTokenAddressToAdd</button>
+                            </div>
 
 
-                            <button onClick={() => setTokenAddressTx.signAndSend([changingSetTokenAddressParamTx])} style={{paddingTop: '0.13rem'}}>
+                            <button onClick={() => setTokenAddressTx.signAndSend([changingSetTokenAddressParamTx])} style={{paddingTop: '0.13rem'}} className="w-[150px] h-[50px] mt-[20px] bg-pink-500 text-white rounded-lg">
                                 {shouldDisable(setTokenAddressTx) ? 'SETTING' : 'addTokenAddress'}
                             </button>
                         </div>
 
 
                         <div style={{paddingTop: '2.5rem'}}>
-                            <div><h2>checkTokenAssetBalance:</h2></div>
-                            <div><input type="text" placeholder="tokenAssetToCheck" style={{background: 'rgb(105, 103, 116)'}} onChange={handleCheckTokenParam} value={changingTokenAssetToCheckParamTx}></input></div>
-                            <div><button onClick={setTokenAssetToCheck}>checkBalance</button></div>
+                            <div><h2 className="text-pink-500">checkTokenAssetBalance:</h2></div>
+                        
+                            <div>
+                                <input type="text" placeholder="tokenAssetToCheck" style={{background: 'rgb(105, 103, 116)'}} onChange={handleCheckTokenParam} value={changingTokenAssetToCheckParamTx}></input>
+                                <button onClick={setTokenAssetToCheck} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">checkBalance</button>
+                            </div>
 
-                            <div style={{paddingTop: '0.35rem'}}><h2>Asset: {tokenAssetToCheckParamTx}</h2></div>
-                            <div><h2>assetBalance: {pickDecoded(shibuyaGetTokenAssetBalance.result)?.toString() || '--'}</h2></div>    
+                            <div style={{paddingTop: '0.35rem'}}>
+                                <h2 style={{display: 'inline'}} className="text-pink-500">Asset: </h2>
+                                <h2 style={{display: 'inline'}}>{tokenAssetToCheckParamTx}</h2>
+                            </div>
+
+                            <div>
+                                <h2 style={{display: 'inline'}} className="text-pink-500">assetBalance: </h2>
+                                <h2 style={{display: 'inline'}}>{pickDecoded(shibuyaGetTokenAssetBalance.result)?.toString() || '--'}</h2>
+                            </div>    
                         </div>
 
 
                         <div style={{paddingTop: '2.5rem'}}>
-                            <div><h2>mintTokenAsset:</h2></div>
-                            <div><input type="text" placeholder="tokenAssetToMintAddress" style={{background: 'rgb(105, 103, 116)'}} onChange={handleTokenAssetAddressToMintParam} value={changingTokenAssetAddressToMintParamTx}></input></div>
-                            <div><button onClick={setTokenAssetAddressToMintFunction}>setTokenAssetAddressToMint</button></div>
+                            <div><h2 className="text-pink-500">mintTokenAsset:</h2></div>
 
 
-                            <div style={{paddingTop: '0.6rem'}}><input type="text" placeholder="tokenAssetToMintQuantity" style={{background: 'rgb(105, 103, 116)'}} onChange={handleTokenAssetQuantityToMintParam} value={changingTokenAssetQuantityToMintParamTx}></input></div>
-                            <div><button onClick={setTokenAssetQuantityToMintFunction}>setTokenAssetQuantityToMint</button></div>
+                            <div>
+                                <input type="text" placeholder="tokenAssetToMintAddress" style={{background: 'rgb(105, 103, 116)'}} onChange={handleTokenAssetAddressToMintParam} value={changingTokenAssetAddressToMintParamTx}></input>
+                                <button onClick={setTokenAssetAddressToMintFunction} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setTokenAssetAddressToMint</button>
+                            </div>
 
 
-                            <button onClick={() => mintTokenAssetTx.signAndSend([tokenAssetAddressToMintParamTx, tokenAssetQuantityToMintParamTx])} style={{paddingTop: '0.3rem'}}>
+                            <div style={{paddingTop: '0.6rem'}}>
+                                <input type="text" placeholder="tokenAssetToMintQuantity" style={{background: 'rgb(105, 103, 116)'}} onChange={handleTokenAssetQuantityToMintParam} value={changingTokenAssetQuantityToMintParamTx}></input>
+                                <button onClick={setTokenAssetQuantityToMintFunction} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setTokenAssetQuantityToMint</button>
+                            </div>
+
+
+                            <button onClick={() => mintTokenAssetTx.signAndSend([tokenAssetAddressToMintParamTx, tokenAssetQuantityToMintParamTx])} style={{paddingTop: '0.3rem'}} className="w-[150px] h-[50px] mt-[20px] bg-pink-500 text-white rounded-lg">
                                 {shouldDisable(mintTokenAssetTx) ? 'SETTING' : 'mintTokenAsset'}
                             </button>
                         </div>
 
 
                         <div style={{paddingTop: '2.5rem'}}>
-                            <div>transferTokenAsset:</div>
+                            <div className="text-pink-500">transferTokenAsset:</div>
 
 
-                            <div><input type="text" placeholder="tokenAssetAddressToTransfer" style={{background: 'rgb(105, 103, 116)'}} onChange={handleTokenAssetToTransferAddressParam} value={changingTokenAssetToTransferAddressParamTx}></input></div>
-                            <div><button onClick={setTokenAssetToTransferAddressFunction}>setTokenAddressToTransfer</button></div>
+                            <div>
+                                <input type="text" placeholder="tokenAssetAddressToTransfer" style={{background: 'rgb(105, 103, 116)'}} onChange={handleTokenAssetToTransferAddressParam} value={changingTokenAssetToTransferAddressParamTx}></input>
+                                <button onClick={setTokenAssetToTransferAddressFunction} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setTokenAddressToTransfer</button>
+                            </div>
 
 
-                            <div style={{paddingTop: '0.6rem'}}><input type="text" placeholder="tokenAssetQuantityToTransfer" style={{background: 'rgb(105, 103, 116)'}} onChange={handleTokenAssetToTransferQuantityParam} value={changingTokenAssetToTransferQuantityParamTx}></input></div>
-                            <div><button onClick={setTokenAssetToTransferQuantityFunction}>setTokenQuantityToTransfer</button></div>
+                            <div style={{paddingTop: '0.6rem'}}>
+                                <input type="text" placeholder="tokenAssetQuantityToTransfer" style={{background: 'rgb(105, 103, 116)'}} onChange={handleTokenAssetToTransferQuantityParam} value={changingTokenAssetToTransferQuantityParamTx}></input>
+                                <button onClick={setTokenAssetToTransferQuantityFunction} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setTokenQuantityToTransfer</button>
+                            </div>
 
 
-                            <div style={{paddingTop: '0.6rem'}}><input type="text" placeholder="tokenAssetReceiverAddress" style={{background: 'rgb(105, 103, 116)'}} onChange={handleTokenAssetToTransferReceiverAddressParam} value={changingTokenAssetToTransferReceiverAddressParamTx}></input></div>
-                            <div><button onClick={setTokenAssetToTransferReceiverAddressFunction}>setTokenReceiverAddress</button></div>
+                            <div style={{paddingTop: '0.6rem'}}>
+                                <input type="text" placeholder="tokenAssetReceiverAddress" style={{background: 'rgb(105, 103, 116)'}} onChange={handleTokenAssetToTransferReceiverAddressParam} value={changingTokenAssetToTransferReceiverAddressParamTx}></input>
+                                <button onClick={setTokenAssetToTransferReceiverAddressFunction} className="w-[240px] h-[28px] mt-[20px] bg-pink-500 text-white rounded-lg">setTokenReceiverAddress</button>
+                            </div>
 
 
-                            <button onClick={() => transferTokenAssetTx.signAndSend([tokenAssetToTransferAddressParamTx, tokenAssetToTransferQuantityParamTx, tokenAssetToTransferReceiverAddressParamTx])} style={{paddingTop: '0.3rem'}}>
+                            <button onClick={() => transferTokenAssetTx.signAndSend([tokenAssetToTransferAddressParamTx, tokenAssetToTransferQuantityParamTx, tokenAssetToTransferReceiverAddressParamTx])} style={{paddingTop: '0.3rem'}} className="w-[150px] h-[50px] mt-[20px] bg-pink-500 text-white rounded-lg">
                                 {shouldDisable(transferTokenAssetTx) ? 'SETTING' : 'transferTokenAsset'}
                             </button>
                         </div>

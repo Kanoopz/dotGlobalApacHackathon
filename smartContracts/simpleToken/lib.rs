@@ -39,7 +39,7 @@ mod simpleToken
             let mut actualAddressToMintBalance = self.balances.get(paramAddressToMint).unwrap_or(0);
             actualAddressToMintBalance += paramQuantity;
 
-            self.balances.insert(&paramAddressToMint, &paramQuantity);
+            self.balances.insert(&paramAddressToMint, &actualAddressToMintBalance);
         }
 
         #[ink(message)]

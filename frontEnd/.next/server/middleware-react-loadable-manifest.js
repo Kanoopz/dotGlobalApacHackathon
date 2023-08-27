@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST={"../components/Snackbar/Snackbar.tsx -> @headlessui/react":{"id":"../components/Snackbar/Snackbar.tsx -> @headlessui/react","files":["static/chunks/node_modules_headlessui_react_dist_headlessui_esm_js.js"]},"_app.tsx -> useink":{"id":"_app.tsx -> useink","files":["static/chunks/node_modules_useink_dist_index_mjs.js"]}}
