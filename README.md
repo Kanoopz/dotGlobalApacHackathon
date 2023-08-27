@@ -2,6 +2,10 @@
 
 Demo with frontEnd integration updated: https://youtu.be/_yaSFZZwIi4
 
+
+
+
+
 accountAbstraction implementation in ink! language with a private onChain password as accountRecoveryMechanism.
 
 The idea of the project is to abstract away the ownership of assets from an EOA and make a smart contract holds them (this is known as smartAccounts) so that in case of hack to the EOA wallet, loss of seedPhrase or that it gets compromised, the funds are still safe in the smartAccount and can be recovered with a socialRecoveryMechanism. 
